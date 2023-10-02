@@ -1,0 +1,153 @@
+<mxfile host="app.diagrams.net" modified="2023-10-02T00:43:29.493Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="g-E7rBFYe470fUzgs0NH" version="21.2.4" type="device">
+  <diagram name="Page-1" id="Kr1rYN9Z7N7GSEPf8ET3">
+    <mxGraphModel dx="610" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UlLnrSHuyfen1mGujvux-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.047;entryY=0.375;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryPerimeter=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-2" target="UlLnrSHuyfen1mGujvux-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-2" value="User" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry y="465" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-3" target="UlLnrSHuyfen1mGujvux-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="397" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-3" target="UlLnrSHuyfen1mGujvux-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-3" value="User Manager" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="500" width="80" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-5" target="UlLnrSHuyfen1mGujvux-73">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-5" value="Plaid API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-10" value="HTTPS Data feed Responses" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="340" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-12" value="User Credentials&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="535" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-16" value="Charts and Figures" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="415" width="70" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-20" value="SQLite Database" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="600" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-21" target="UlLnrSHuyfen1mGujvux-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-21" target="UlLnrSHuyfen1mGujvux-73">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-21" value="Data Feed manager" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="270" y="390" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-32" value="HTTPS Request Data Feeds" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="250" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.972;entryY=0.367;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-37" target="UlLnrSHuyfen1mGujvux-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="470" />
+              <mxPoint x="420" y="533" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-37" target="UlLnrSHuyfen1mGujvux-59">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="400" />
+              <mxPoint x="610" y="718" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-37" value="Encryption Service" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="420" y="390" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.022;exitY=0.625;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-39" target="UlLnrSHuyfen1mGujvux-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-39" target="UlLnrSHuyfen1mGujvux-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-39" value="HTTPS/TLS" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="140" y="445" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-44" value="Encrypted Traffic" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="440" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-48" value="&amp;nbsp;AES encrypted User Credentials&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="425" y="720" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-53" value="User Credentials&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="530" y="670" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-57" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=0.986;exitY=0.676;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-3" target="UlLnrSHuyfen1mGujvux-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="500" as="sourcePoint" />
+            <mxPoint x="440" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="460" y="561" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-58" value="Check Credentials&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="470" y="550" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-59" target="UlLnrSHuyfen1mGujvux-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-59" target="UlLnrSHuyfen1mGujvux-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="700" />
+              <mxPoint x="600" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-59" value="User Creation" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="270" y="650" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-61" value="New user" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="600" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-63" value="insert&amp;nbsp; AES encrypted user credentials" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="650" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-71" value="Request Data Feed&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="300" y="325" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-73">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="250" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="200" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UlLnrSHuyfen1mGujvux-73" target="UlLnrSHuyfen1mGujvux-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="282" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UlLnrSHuyfen1mGujvux-73" value="HTTPS/TLS" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="165" y="300" width="80" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
