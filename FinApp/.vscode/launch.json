@@ -8,9 +8,10 @@
             "name": "Python: App",
             "type": "python",
             "request": "launch",
-            "program": "FinApp.py",
+            "program": "${file}",
             "console": "integratedTerminal",
-            "justMyCode": true
+            "justMyCode": true,
+            "args": ["runserver"]
         }
     ]
 }

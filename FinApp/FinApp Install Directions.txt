@@ -28,3 +28,14 @@
 - "pip freeze > requirements.txt"
 - git commit changes to requirements.txt for everyone else
 - git push
+
+5) Run Django Test
+- using CMD go into CSC4022-TuringTribe\FinApp directory
+- run python manage.py runserver
+- Open http://127.0.0.1:8000/ and verify that a Django page has opened
+
+
+6) if you are having securtity issues and see the follow error 
+Visual studio code cmd error: Cannot be loaded because running scripts is disabled on this system
+open this page and follow the directions 
+https://stackoverflow.com/questions/56199111/visual-studio-code-cmd-error-cannot-be-loaded-because-running-scripts-is-disabl
