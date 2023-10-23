@@ -1,7 +1,7 @@
 1)Clone Repo to local machine
 - "Git Clone https://github.com/AaDGarrison/CSC4022-TuringTribe.git"
 
-2)Python Virtual Envirment
+2)Python Virtual Envirment setup
 - Go into CSC4022-TuringTribe\FinApp Directory and create Folder called "PythonEnviroment"
 - Open CMD and Navigate to FinApp directory of Repo "CSC4022-TuringTribe\FinApp"
 - Run "python -m venv ./PythonEnviroment"    May need to change python to python3
@@ -20,3 +20,11 @@
 -open FinApp Foder
 -open FinApp.py
 -Run Python
+
+4)Adding a dependency:
+- Go into CSC4022-TuringTribe\FinApp Directory
+- Activate your vurtial enviroment ".\PythonEnviroment\Scripts\activate"
+- "pip install "dependency""
+- "pip freeze > requirements.txt"
+- git commit changes to requirements.txt for everyone else
+- git push
