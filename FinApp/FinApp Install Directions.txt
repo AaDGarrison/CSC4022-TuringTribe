@@ -9,10 +9,10 @@
 	-should see Python Envroment come up in the bottom left
 	- Run "pip install -r requirements.txt"
 - Open VsCode, open folder CSC4022-TuringTribe\FinApp
-	- shift+ctrl+P Select interpretor and select the python.exe that is in the PythonEnvirment Directory
+	- shift+ctrl+P Select interpretor and select the python.exe that is in the PythonEnviroment Directory
 		- This should stay active for all future times opening visual studio code
 		- I recommend downloading Python Enviroment manager since you can see all local venv as well(Might need to change securty Policies)
-- create Text file and name it ".gitignore" in the "CSC4022-TuringTribe\" directory (Might already added)
+- create Text file and name it ".gitignore" in the "CSC4022-TuringTribe\" directory (Might be already added)
 	- add "/FinApp/PythonEnviroment" to file. Save and Close
 
 3) Running Application from Vscode
@@ -23,7 +23,7 @@
 
 4)Adding a dependency:
 - Go into CSC4022-TuringTribe\FinApp Directory
-- Activate your vurtial enviroment ".\PythonEnviroment\Scripts\activate"
+- Activate your virtual enviroment ".\PythonEnviroment\Scripts\activate"
 - "pip install "dependency""
 - "pip freeze > requirements.txt"
 - git commit changes to requirements.txt for everyone else
@@ -31,6 +31,7 @@
 
 5) Run Django Test
 - using CMD go into CSC4022-TuringTribe\FinApp directory
+- Activate your vurtial enviroment ".\PythonEnviroment\Scripts\activate"
 - run python manage.py runserver
 - Open http://127.0.0.1:8000/ and verify that a Django page has opened
 
