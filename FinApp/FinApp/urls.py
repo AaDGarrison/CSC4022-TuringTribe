@@ -34,9 +34,15 @@ from . import views
 # URL Patterns
 
 urlpatterns = [
-    path('', views.dashboard),
+    # Default page.
+    path('', views.login),
+
+    # Default Django admin page.
     path('admin/', admin.site.urls),
+
+    # Other URLS
     path('login/', views.login),
     path('dashboard/', views.dashboard),
     path('statistics/', views.statistics),
+    path('settings/', views.settings)
 ]

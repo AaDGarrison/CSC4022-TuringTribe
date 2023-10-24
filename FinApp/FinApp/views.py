@@ -8,7 +8,10 @@ View methods for FinApp.
 # Django Imports
 
 from django.shortcuts import render
-from django.http import HttpResponse
+
+# ----------------------------------------------------------------------------
+# View Methods
+# ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
 def login(request):
@@ -21,3 +24,7 @@ def dashboard(request):
 # ----------------------------------------------------------------------------
 def statistics(request):
     return render(request, 'statistics.html')
+
+# ----------------------------------------------------------------------------
+def settings(request):
+    return render(request, 'settings.html')

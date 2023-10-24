@@ -1,8 +1,12 @@
 <!DOCTYPE html>
+
 <html>
 
+<!-- HEADER -->
+
 <head>
-  <link rel="stylesheet" href="styles.css">
+  
+  <link rel="stylesheet" href="styles/styles.css">
 
   <title>Login</title>
 
@@ -14,18 +18,39 @@
 
 <body>
 
-<div class="container">
-  <ul class="nav bg-info">
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/">HOME</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/members">MEMBERS</a>
-    </li>
-  </ul>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/dashboard">FinApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/statistics">Statistics</a>
+        </li>
+      </ul>
+    </div>
+    <div class="text-end">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/settings">Settings</a>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="btn btn-dark" id="logoutButton">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-  {% block content %}
-  {% endblock %}
-</div>
+  <!-- Financials -->
+  <div>
+
+  </div>
+
 </body>
+
 </html>
