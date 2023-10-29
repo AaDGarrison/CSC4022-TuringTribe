@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+
+<!-- HEADER -->
+
+<head>
+  <title>Login</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/dashboard">FinApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link active" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/statistics">Statistics</a>
+        </li>
+      </ul>
+    </div>
+    <div class="text-end">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/settings">Settings</a>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="btn btn-dark" id="logoutButton">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Financials -->
+  <div>
+
+    <!-- FINANCIALS SUM -->
+    <div class="jumbotron text-center">
+      <h1 class="display-4" style="padding-top: 100px;">Temp variable here</h1>
+      <button class="btn btn-dark">Hide Balance</button>
+    </div>
+    
+    <!-- FINANCIAL CARDS -->
+
+    <!-- FIRST ROW -->
+    <div class="container">
+      <div class="row">
+          {% for id in data.CardID %}
+              <div class="col-md-4">
+                  <!-- Your content here for each card -->
+                  <div class="card">
+                      <div class="card-body">
+                        {% include 'cards.html' with id=id %}
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  var cardIdList=DjangoListToJsList('{{data.CardID|safe}}');
+  
+  function DjangoListToJsList(data)
+{
+    data = data.slice(1);
+    data = data.slice(0, -1);
+    data = data.split(",");
+    return data;
+
+}
+</script>
+{% load static %}
+<script src="{% static 'FinApp/js/card_list.js' %}"></script>
+<script src="{% static 'FinApp/js/dashboard.js' %}"></script>
+
+
+</html>

@@ -1,9 +1,12 @@
 asgiref==3.7.2
+beautifulsoup4==4.12.2
 Django==4.2.6
+django-bootstrap-v5==1.0.11
 nulltype==2.3.1
 plaid-python==17.0.0
 python-dateutil==2.8.2
 six==1.16.0
+soupsieve==2.5
 sqlparse==0.4.4
 tzdata==2023.3
 urllib3==2.0.7

@@ -1,0 +1,42 @@
+1) Clone Repo to local machine
+- "Git Clone https://github.com/AaDGarrison/CSC4022-TuringTribe.git"
+
+2) Python Virtual Enviroment setup
+	- Go into CSC4022-TuringTribe\FinApp Directory and create Folder called "PythonEnvirnoment"
+	- Open CMD and Navigate to FinApp directory of Repo "CSC4022-TuringTribe\FinApp"
+	- Run "python -m venv ./PythonEnvironment"    May need to change python to python3
+	- Activate your vurtial enviroment ".\PythonEnvironment\Scripts\activate"
+		-should see Python Environment come up in the bottom left
+		- Run "pip install -r requirements.txt"
+	- Open VsCode, open folder CSC4022-TuringTribe\FinApp
+		- shift+ctrl+P Select interpretor and select the python.exe that is in the PythonEnviroment Directory
+			- This should stay active for all future times opening visual studio code
+			- I recommend downloading Python Enviroment manager since you can see all local venv as well(Might need to change securty Policies)
+	- create Text file and name it ".gitignore" in the "CSC4022-TuringTribe\" directory (Might be already added)
+		- Add "/FinApp/PythonEnviroment" to file. Save and Close.
+
+3) Running Application from Vscode
+	- Open visual studio code 
+	- Open FinApp Folder
+	- Open manage.py
+	- Run Python
+
+4) Adding a dependency:
+	- Go into CSC4022-TuringTribe\FinApp Directory
+	- Activate your virtual enviroment ".\PythonEnviroment\Scripts\activate"
+	- "pip install "dependency""
+	- "pip freeze > requirements.txt"
+	- git commit changes to requirements.txt for everyone else
+	- git push
+
+5) Run Django Test
+	- Using CMD go into CSC4022-TuringTribe\FinApp directory
+	- Activate your vurtial enviroment ".\PythonEnviroment\Scripts\activate"
+	- Run python manage.py runserver
+	- Open http://127.0.0.1:8000/ and verify that a Django page has opened
+
+
+6) If you are having securtity issues and see the follow error 
+Visual studio code cmd error: Cannot be loaded because running scripts is disabled on this system
+open this page and follow the directions 
+https://stackoverflow.com/questions/56199111/visual-studio-code-cmd-error-cannot-be-loaded-because-running-scripts-is-disabl

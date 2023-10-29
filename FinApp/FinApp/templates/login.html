@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER -->
+
+<head>
+
+  <link rel="stylesheet" href="styles/styles.css">
+
+  <title>Login</title>
+
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+</head>
+
+<body>
+
+  <!-- Login Section -->
+  <section class="text-center">
+
+    <!-- Background Color -->
+    <div class="p-5 bg-image bg-dark" style="height: 300px;">
+      <div>
+        <text>FinApp</text>
+      </div>
+    </div>
+    
+      <div class="card-body py-5 px-md-5">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8" style="width: 700px;">
+            <h2 class="fw-bold mb-5">Log In</h2>
+
+            <form id="loginForm">
+
+              <!-- 2 column grid layout with text inputs for the first and last names -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="firstName" class="form-control" />
+                    <label class="form-label" for="firstName">First Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="lastName" class="form-control" />
+                    <label class="form-label" for="lasName">Last Name</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input type="email" id="email" class="form-control" />
+                <label class="form-label" for="email">Email Address</label>
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input type="password" id="password" class="form-control" />
+                <label class="form-label" for="password">Password</label>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                Submit
+              </button>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- Section: Design Block -->
+</body>
+
+</html>

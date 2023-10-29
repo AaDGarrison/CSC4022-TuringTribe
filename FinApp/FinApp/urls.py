@@ -1,6 +1,10 @@
 """
-URL configuration for FinApp project.
+urls.py
 
+URL patterns for FinApp.
+"""
+
+"""
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
@@ -14,9 +18,31 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# ----------------------------------------------------------------------------
+# Django Imports
+
 from django.contrib import admin
 from django.urls import path
 
+# ----------------------------------------------------------------------------
+# Imports
+
+from . import views
+
+# ----------------------------------------------------------------------------
+# URL Patterns
+
 urlpatterns = [
+    # Default page.
+    path('', views.login),
+
+    # Default Django admin page.
     path('admin/', admin.site.urls),
+
+    # Other URLS
+    path('login/', views.login),
+    path('dashboard/', views.dashboard),
+    path('statistics/', views.statistics),
+    path('settings/', views.settings)
 ]
