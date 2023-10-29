@@ -2,11 +2,11 @@
 - "Git Clone https://github.com/AaDGarrison/CSC4022-TuringTribe.git"
 
 2) Python Virtual Enviroment setup
-	- Go into CSC4022-TuringTribe\FinApp Directory and create Folder called "PythonEnviroment"
+	- Go into CSC4022-TuringTribe\FinApp Directory and create Folder called "PythonEnvirnoment"
 	- Open CMD and Navigate to FinApp directory of Repo "CSC4022-TuringTribe\FinApp"
-	- Run "python -m venv ./PythonEnviroment"    May need to change python to python3
-	- Activate your vurtial enviroment ".\PythonEnviroment\Scripts\activate"
-		-should see Python Envroment come up in the bottom left
+	- Run "python -m venv ./PythonEnvironment"    May need to change python to python3
+	- Activate your vurtial enviroment ".\PythonEnvironment\Scripts\activate"
+		-should see Python Environment come up in the bottom left
 		- Run "pip install -r requirements.txt"
 	- Open VsCode, open folder CSC4022-TuringTribe\FinApp
 		- shift+ctrl+P Select interpretor and select the python.exe that is in the PythonEnviroment Directory

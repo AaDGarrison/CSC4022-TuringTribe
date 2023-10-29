@@ -8,7 +8,7 @@ View methods for FinApp.
 # Django Imports
 
 from django.shortcuts import render
-
+#from FinApp.models import dashboardCardCount
 # ----------------------------------------------------------------------------
 # View Methods
 # ----------------------------------------------------------------------------
@@ -19,7 +19,12 @@ def login(request):
 
 # ----------------------------------------------------------------------------
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    data = {
+        "TotalCards":range(5), #dashboardCardCount.objects.get(user=request.user),
+        "CardID": [222,333,444,555,666]
+    }
+
+    return render(request, 'dashboard.html',{"data": data})
 
 # ----------------------------------------------------------------------------
 def statistics(request):
