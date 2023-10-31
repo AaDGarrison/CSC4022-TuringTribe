@@ -15,7 +15,7 @@ from django.shortcuts import render
 
 # ----------------------------------------------------------------------------
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'registration/login.html')
 
 # ----------------------------------------------------------------------------
 def dashboard(request):
@@ -24,7 +24,7 @@ def dashboard(request):
         "CardID": [222,333,444,555,666]
     }
 
-    return render(request, 'dashboard.html',{"data": data})
+    return render(request, 'dashboard.html', {"data": data})
 
 # ----------------------------------------------------------------------------
 def statistics(request):
