@@ -23,7 +23,15 @@ Including another URLconf
 # Django Imports
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import (
+    path,
+    include,
+)
+
+# ----------------------------------------------------------------------------
+# Form Imports
+
+from FinApp.forms import UserLoginForm
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -34,14 +42,16 @@ from . import views
 # URL Patterns
 
 urlpatterns = [
-    # Default page.
-    path('', views.login),
 
     # Default Django admin page.
     path('admin/', admin.site.urls),
 
-    # Other URLS
+    # Authentication URLS (Login, Logout etc.)
+    path('accounts/', include('django.contrib.auth.urls')),
     path('login/', views.login),
+
+    # Other URLS
+    #path('login/', views.login),
     path('dashboard/', views.dashboard),
     path('statistics/', views.statistics),
     path('settings/', views.settings)

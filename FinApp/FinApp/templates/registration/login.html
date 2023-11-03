@@ -34,7 +34,7 @@
 
             <form id="loginForm" method="post">
               {% csrf_token %}
-              {{ form. as_p }}
+              {{ form.UserLoginForm }}
 
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class="row">
@@ -47,7 +47,7 @@
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
                     <input type="text" id="lastName" class="form-control" />
-                    <label class="form-label" for="lasName">Last Name</label>
+                    <label class="form-label" for="lastName">Last Name</label>
                   </div>
                 </div>
               </div>
