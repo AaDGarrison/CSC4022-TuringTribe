@@ -5,6 +5,7 @@ function initCardData()
 {
     for(i=0; i<cardIdList.length;i++)
     {
-        console.log(cardIdList[1]);
+        console.log(cardIdList[i]);
+        updateList(GetTransaction(i),cardIdList[i])
     }
 }
