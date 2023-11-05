@@ -4,9 +4,11 @@ views.py
 View methods for FinApp.
 """
 
+
+
 # ----------------------------------------------------------------------------
 # Django Imports
-
+from json import dumps
 from django.shortcuts import render
 #from FinApp.models import dashboardCardCount
 # ----------------------------------------------------------------------------
@@ -15,16 +17,17 @@ from django.shortcuts import render
 
 # ----------------------------------------------------------------------------
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'registration/login.html')
 
 # ----------------------------------------------------------------------------
 def dashboard(request):
     data = {
         "TotalCards":range(5), #dashboardCardCount.objects.get(user=request.user),
-        "CardID": [222,333,444,555,666]
+        "CardIDJSON": dumps([1222,2333,1444,1555,2666]),
+        "CardID": [1222,2333,1444,1555,2666]
     }
 
-    return render(request, 'dashboard.html',{"data": data})
+    return render(request, 'dashboard.html', {"data": data})
 
 # ----------------------------------------------------------------------------
 def statistics(request):

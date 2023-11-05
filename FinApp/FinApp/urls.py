@@ -23,7 +23,7 @@ Including another URLconf
 # Django Imports
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -41,6 +41,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Other URLS
+	path('api/', include("Api.urls")),
     path('login/', views.login),
     path('dashboard/', views.dashboard),
     path('statistics/', views.statistics),
