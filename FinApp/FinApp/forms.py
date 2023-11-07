@@ -7,8 +7,11 @@ class UserLoginForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
+        self.fields.pop('username')
+        self.fields.pop('password')
 
-    firstName = UsernameField(widget=forms.TextInput(
+
+    First_Name = UsernameField(widget=forms.TextInput(
         attrs={
             'class': 'form-control', 
             'placeholder': '', 
@@ -16,7 +19,7 @@ class UserLoginForm(AuthenticationForm):
         }
     ))
 
-    lastName = UsernameField(widget=forms.TextInput(
+    Last_Name = UsernameField(widget=forms.TextInput(
         attrs={
             'class': 'form-control', 
             'placeholder': '', 
@@ -24,7 +27,7 @@ class UserLoginForm(AuthenticationForm):
         }
     ))
 
-    email = UsernameField(widget=forms.TextInput(
+    Email = UsernameField(widget=forms.TextInput(
         attrs={
             'class': 'form-control', 
             'placeholder': '', 
@@ -32,7 +35,7 @@ class UserLoginForm(AuthenticationForm):
         }
     ))
 
-    password = forms.CharField(widget=forms.PasswordInput(
+    Password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': '',

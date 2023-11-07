@@ -21,6 +21,7 @@ Including another URLconf
 
 # ----------------------------------------------------------------------------
 # Django Imports
+# ----------------------------------------------------------------------------
 
 from django.contrib import admin
 from django.urls import (
@@ -30,16 +31,19 @@ from django.urls import (
 
 # ----------------------------------------------------------------------------
 # Form Imports
+# ----------------------------------------------------------------------------
 
 from FinApp.forms import UserLoginForm
 
 # ----------------------------------------------------------------------------
 # Imports
+# ----------------------------------------------------------------------------
 
 from . import views
 
 # ----------------------------------------------------------------------------
 # URL Patterns
+# ----------------------------------------------------------------------------
 
 urlpatterns = [
 
@@ -47,12 +51,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Authentication URLS (Login, Logout etc.)
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('login/', views.login),
+    path('', include('django.contrib.auth.urls')),
 
-    # Other URLS
-    #path('login/', views.login),
+    # After Authentication URLs
     path('dashboard/', views.dashboard),
-    path('statistics/', views.statistics),
-    path('settings/', views.settings)
+    path('settings/', views.settings),
 ]

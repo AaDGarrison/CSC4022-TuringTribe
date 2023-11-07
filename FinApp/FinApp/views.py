@@ -6,19 +6,59 @@ View methods for FinApp.
 
 # ----------------------------------------------------------------------------
 # Django Imports
+# ----------------------------------------------------------------------------
 
 from django.shortcuts import render
-#from FinApp.models import dashboardCardCount
+from django.views.generic import View
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 # ----------------------------------------------------------------------------
-# View Methods
+# Imports
+# ----------------------------------------------------------------------------
+
+from . import forms
+
+# ----------------------------------------------------------------------------
+# View Methods/Classes
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
-def login(request):
-    return render(request, 'registration/login.html')
+class LoginPageView(View):
+    
+    template_name = 'registration/login.html'
+    form_class = forms.UserLoginForm
+    
+    #def get(self, request):
+
+        #form = self.form_class()
+        #message = ''
+
+        #return render(request, self.template_name, context={'form': form, 'message': message})
+        
+    def post(self, request):
+
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+            user = authenticate(
+                first_name      = form.First_Name,
+                last_name       = form.Last_Name,
+                email           = form.Email,
+                password        = form.Password,
+            )
+
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard/')
+            
+        message = 'Login failed! Try again.'
+        return render(request, self.template_name, context = {'form': form, 'message': message})
 
 # ----------------------------------------------------------------------------
+@login_required(login_url='/accounts/login/')
 def dashboard(request):
     data = {
         "TotalCards":range(5), #dashboardCardCount.objects.get(user=request.user),
@@ -28,9 +68,6 @@ def dashboard(request):
     return render(request, 'dashboard.html', {"data": data})
 
 # ----------------------------------------------------------------------------
-def statistics(request):
-    return render(request, 'statistics.html')
-
-# ----------------------------------------------------------------------------
+@login_required(login_url='/accounts/login/')
 def settings(request):
     return render(request, 'settings.html')
