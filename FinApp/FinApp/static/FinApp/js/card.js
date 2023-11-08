@@ -15,7 +15,7 @@ function updateTile(id,titleData)
 function getTitle(id)
 {
     var query="?CardId="+id
-    return fetch('http://127.0.0.1:8000/api/get-card-name/'+query)
+    return fetch('/api/get-card-name/'+query)
     .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

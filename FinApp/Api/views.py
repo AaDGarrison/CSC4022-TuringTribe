@@ -10,10 +10,10 @@ from plaid.model.link_token_create_request import LinkTokenCreateRequest
 from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUser
 from plaid.model.products import Products
 from plaid.model.country_code import CountryCode
+from dotenv import load_dotenv
 import time
 import datetime
-import json
-from dotenv import load_dotenv
+from django.contrib.auth.decorators import login_required
 import os
 load_dotenv()
 configuration = plaid.Configuration(
@@ -43,7 +43,7 @@ private_token=exchange_response['access_token']
 #Send the client a link to setup Plaid institution
 def sendLinkRequest(request):  
     """
-    HTTP API request which returns a JOSN reposnse to allow a Link request to be estabilished
+    HTTPS API request which returns a JOSN reposnse to allow a Link request to be estabilished
 
     :param str url: /api/send-link-request/.
     :param str method: 'GET'.
@@ -55,24 +55,24 @@ def sendLinkRequest(request):
     :rtype: JOSN.Response
     :raises: requests.exceptions.RequestException if the request fails.
     """
-    ## go to https://dashboard.plaid.com/developers/api and add a redirect URL needs HTTPS
-    # request = LinkTokenCreateRequest(
-    #         products=[Products("auth")],
-    #         client_name="Plaid Test App",
-    #         country_codes=[CountryCode('US')],
-    #         redirect_uri='http://localhost:3000/',
-    #         language='en',
-    #         user=LinkTokenCreateRequestUser(
-    #             client_user_id=str(time.time())
-    #         )
-    #     )
-    # response = client.link_token_create(request)
-    # return JsonResponse(response.to_dict())
-    return JsonResponse({"not Ready":"Needs HTTPS"})
+    # go to https://dashboard.plaid.com/developers/api and add a redirect URL needs HTTPS
+    request = LinkTokenCreateRequest(
+            products=[Products("auth")],
+            client_name="Plaid Test App",
+            country_codes=[CountryCode('US')],
+            redirect_uri='https://localhost:3000/dashboard',
+            language='en',
+            user=LinkTokenCreateRequestUser(
+                client_user_id=str(time.time())
+            )
+        )
+    response = client.link_token_create(request)
+    return JsonResponse(response.to_dict())
+    #return JsonResponse({"not Ready":"Needs HTTPS"})
 #receive and setup a new pulic acess token and save to database
 def setupInstitution(request):
     """
-    HTTP API request which returns a JOSN reposnse of the accounts Transaction for a given start and stop date.
+    HTTPS API request which returns a JOSN reposnse of the accounts Transaction for a given start and stop date.
 
     :param str url: /api/setup-institution/.
     :param str method: 'POST'.
@@ -84,18 +84,29 @@ def setupInstitution(request):
     :rtype: JOSN.Response that verifies the successful creation of an new instituation.
     :raises: requests.exceptions.RequestException if the request fails.
     """
-    if(request.method=='POST'):
-        response_data = {
-            'message': 'Institution succesufully setup.'
-        }
-        return JsonResponse(response_data, status=201)
-    else:
-        # Return a Bad Request response for invalid HTTP method
-        return HttpResponseBadRequest("Invalid request method")
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    public_token = request.POST.get('public_token')
+    if public_token:
+        exchange_request = plaid_api.ItemPublicTokenExchangeRequest(
+            public_token=pt_response['public_token']
+            )
+        exchange_response = client.item_public_token_exchange(exchange_request)
+        private_token=exchange_response['access_token']
+        
+        # You should have a model for storing access tokens.
+        # Replace AccessToken with your actual model.
+        #access_token = AccessToken(public_token=public_token)
+        #access_token.save()
+        print(private_token)
+        return JsonResponse({'public_token_exchange': 'complete'})
+
+
+    
 
 def getTransactions(request):
     """
-    HTTP API request which returns a JOSN reposnse of the accounts Transaction for a given start and stop date.
+    HTTPS API request which returns a JOSN reposnse of the accounts Transaction for a given start and stop date.
 
     :param str url: /api/get-transactions/.
     :param str method: 'GET'.
@@ -107,6 +118,8 @@ def getTransactions(request):
     :rtype: JOSN.Response
     :raises: requests.exceptions.RequestException if the request fails.
     """
+    if request.method != 'GET':
+        return HttpResponseBadRequest("Invalid request method")
     start= request.GET.get('StartDate')
     end= request.GET.get('StopDate')
         
@@ -137,11 +150,10 @@ def getTransactions(request):
             
         })
     return JsonResponse(transactionList,safe=False)
-    #return HttpResponse(transactions,content_type='application/json')
 
 def getBalance(request):
     """
-    HTTP API request which returns a JOSN reposnse of the requested account balance
+    HTTPS API request which returns a JOSN reposnse of the requested account balance
 
     :param str url: /api/get-balance/.
     :param str method: 'GET'.

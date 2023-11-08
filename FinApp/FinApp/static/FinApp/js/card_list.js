@@ -25,7 +25,7 @@ function updateList(data, id) {
 }
 function GetTransaction(id) {
   // Fetch data from the API
-  return fetch('http://127.0.0.1:8000/api/get-transactions/?StartDate=2021-03-25&StopDate=2021-12-25')
+  return fetch('/api/get-transactions/?StartDate=2021-03-25&StopDate=2021-12-25')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

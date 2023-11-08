@@ -8,10 +8,10 @@ function updateSingleItem(id,text)
         // Handle the error
         console.error(error);
     }
-}
+}s
 function getBalance(id)
 {
-    return fetch('http://127.0.0.1:8000/api/get-balance/')
+    return fetch('/api/get-balance/')
     .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

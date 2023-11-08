@@ -3,6 +3,7 @@ views.py
 
 View methods for FinApp.
 """
+from django.contrib.auth.decorators import login_required
 
 
 
