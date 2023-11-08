@@ -24,10 +24,7 @@ Including another URLconf
 # ----------------------------------------------------------------------------
 
 from django.contrib import admin
-from django.urls import (
-    path,
-    include,
-)
+from django.urls import include, path
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -44,6 +41,9 @@ urlpatterns = [
     # Default Django.
     path('admin/', admin.site.urls),
 
+    # Other URLS
+	path('api/', include("Api.urls")),
+    #path('login/', views.login),
     # Authentication URLS (Login, Logout etc.)
     #path('', include('django.contrib.auth.urls')),
     path('', views.loginPage, name = 'login'),

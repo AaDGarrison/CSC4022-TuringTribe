@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Api',
     'django_extensions',
     'sslserver',
     'bootstrap5',
@@ -60,7 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'FinApp.urls'
-
+ALLOWED_HOSTS = ['*']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

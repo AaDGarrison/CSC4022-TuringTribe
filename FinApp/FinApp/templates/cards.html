@@ -1,8 +1,15 @@
 <div class="card">
-    <div class="card-header">
-        <h5>Card Title</h5>
+    <div class="card-header" >
+        <h5 id={{id}}-Title>Card Title</h5>
     </div>
     <div class="card-body" id="list-card-body">
-        {% include 'card_list.html' with cardID=id %}
+        {% if id >= 1000 and id < 2000 %}
+            {% include 'card_list.html' with cardID=id %}
+
+        {% elif id >= 2000 and id < 3000 %} 
+            {% include 'card_single_item.html' with cardID=id %}      
+        {% else %}
+            <p>invalid card ID</p>
+        {% endif %}
     </div>
 </div>

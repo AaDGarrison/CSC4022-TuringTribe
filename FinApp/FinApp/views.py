@@ -4,11 +4,14 @@ views.py
 View methods for FinApp.
 """
 
+
+
 # ----------------------------------------------------------------------------
 # Django Imports
 # ----------------------------------------------------------------------------
 
-from django.shortcuts import render
+from json import dumps
+from django.contrib.auth.decorators import login_requiredfrom django.shortcuts import render
 from django.views.generic import View
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -89,7 +92,8 @@ def logoutPage(request):
 def dashboard(request):
     data = {
         "TotalCards":range(5), #dashboardCardCount.objects.get(user=request.user),
-        "CardID": [222,333,444,555,666]
+        "CardIDJSON": dumps([1222,2333,1444,1555,2666]),
+        "CardID": [1222,2333,1444,1555,2666]
     }
 
     return render(request, 'dashboard.html', {"data": data})

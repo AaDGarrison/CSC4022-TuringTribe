@@ -2,7 +2,15 @@
 
 <html>
 
-<!-- HEADER -->
+<style>
+  #smallButton.btn-smaller {
+  font-size: 0.75rem; /* Adjust the font size as needed */
+  padding: 0.2rem 0.5rem; /* Adjust padding as needed */
+  line-height: 1; /* Adjust line-height as needed */
+  }
+
+</style>
+
 
 <head>
   
@@ -44,10 +52,61 @@
   </nav>
 
   <!-- User Settings -->
-  <div>
+  <div class="row" style="padding: 25px;">
+    <div class="col-sm-12">
 
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Configured instituations</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content. <button id="smallButton" class="btn btn-primary btn-smaller">Remove instituation</button></p>
+          <a  id="link-button" class="btn btn-primary">Link Account</a>
+        </div>
+      </div>
+    </div>
   </div>
+  
+      
+  
+  
+  
+
+
+  
 
 </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+    <script type="text/javascript">
+    function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+    (async function($) {
+      var tokenResponse =await fetch('/api/send-link-request/')
+      var TokenJson = await tokenResponse.json()
+      var handler = Plaid.create({
+        token: TokenJson.link_token,
+        onSuccess: function(public_token, metadata) {
+          $.ajaxSetup({
+              headers: {
+              'X-CSRFToken': getCookie('csrftoken')
+              }
+          });
+          $.post('/api/setup-institution/', {
+            public_token: public_token,
+          });
+        },
+        onExit: function(err, metadata) {
+          if (err != null) {
+            console.error(err);
+          }
+        },
 
+      });
+      $('#link-button').on('click', function(e) {
+        handler.open();
+      });
+    })(jQuery);
+  </script>
 </html>
