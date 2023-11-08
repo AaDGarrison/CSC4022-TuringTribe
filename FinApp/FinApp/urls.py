@@ -30,12 +30,6 @@ from django.urls import (
 )
 
 # ----------------------------------------------------------------------------
-# Form Imports
-# ----------------------------------------------------------------------------
-
-from FinApp.forms import UserLoginForm
-
-# ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
 
@@ -47,11 +41,14 @@ from . import views
 
 urlpatterns = [
 
-    # Default Django admin page.
+    # Default Django.
     path('admin/', admin.site.urls),
 
     # Authentication URLS (Login, Logout etc.)
-    path('', include('django.contrib.auth.urls')),
+    #path('', include('django.contrib.auth.urls')),
+    path('', views.loginPage, name = 'login'),
+    path('signup/', views.signupPage, name = 'signup'),
+    path('logout/', views.logoutPage, name = 'logout'),
 
     # After Authentication URLs
     path('dashboard/', views.dashboard),

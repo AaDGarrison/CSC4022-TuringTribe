@@ -10,55 +10,82 @@ View methods for FinApp.
 
 from django.shortcuts import render
 from django.views.generic import View
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-
-# ----------------------------------------------------------------------------
-# Imports
-# ----------------------------------------------------------------------------
-
-from . import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 # ----------------------------------------------------------------------------
 # View Methods/Classes
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
-class LoginPageView(View):
-    
-    template_name = 'registration/login.html'
-    form_class = forms.UserLoginForm
-    
-    #def get(self, request):
+# Signup
+def signupPage(request):
 
-        #form = self.form_class()
-        #message = ''
-
-        #return render(request, self.template_name, context={'form': form, 'message': message})
-        
-    def post(self, request):
-
-        form = self.form_class(request.POST)
-
+    message = ''
+ 
+    if request.user.is_authenticated:
+        return redirect('/dashboard')
+     
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+ 
         if form.is_valid():
 
-            user = authenticate(
-                first_name      = form.First_Name,
-                last_name       = form.Last_Name,
-                email           = form.Email,
-                password        = form.Password,
-            )
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username = username, password = password)
+            login(request, user)
+            return redirect('/dashboard')
+         
+        else:
+            message = 'FAILURE TO REGISTER'
+            return render(request,'registration/signup.html', {'form': form, 'message': message})
+     
+    else:
 
-            if user is not None:
-                login(request, user)
-                return redirect('dashboard/')
-            
-        message = 'Login failed! Try again.'
-        return render(request, self.template_name, context = {'form': form, 'message': message})
+        form = UserCreationForm()
+        return render(request,'registration/signup.html', {'form': form, 'message': message})
 
 # ----------------------------------------------------------------------------
-@login_required(login_url='/accounts/login/')
+# Login
+def loginPage(request):
+
+    if request.user.is_authenticated:
+        return redirect('/dashboard')
+
+    if request.method == 'POST':
+
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username = username, password = password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/dashboard')
+        else:
+            form = AuthenticationForm()
+            return render(request, 'registration/login.html', {'form': form})
+        
+    else:
+
+        form = AuthenticationForm()
+        return render(request, 'registration/login.html', {'form': form})
+
+# ----------------------------------------------------------------------------
+# Logout
+@login_required(login_url='')
+def logoutPage(request):
+
+    logout(request)
+    return redirect('/')
+
+# ----------------------------------------------------------------------------
+# Dashboard
+@login_required(login_url='')
 def dashboard(request):
     data = {
         "TotalCards":range(5), #dashboardCardCount.objects.get(user=request.user),
@@ -68,6 +95,7 @@ def dashboard(request):
     return render(request, 'dashboard.html', {"data": data})
 
 # ----------------------------------------------------------------------------
-@login_required(login_url='/accounts/login/')
+# Settings
+@login_required(login_url='')
 def settings(request):
     return render(request, 'settings.html')
