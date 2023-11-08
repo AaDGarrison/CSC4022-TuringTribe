@@ -21,29 +21,36 @@ Including another URLconf
 
 # ----------------------------------------------------------------------------
 # Django Imports
+# ----------------------------------------------------------------------------
 
 from django.contrib import admin
 from django.urls import include, path
 
 # ----------------------------------------------------------------------------
 # Imports
+# ----------------------------------------------------------------------------
 
 from . import views
 
 # ----------------------------------------------------------------------------
 # URL Patterns
+# ----------------------------------------------------------------------------
 
 urlpatterns = [
-    # Default page.
-    path('', views.login),
 
-    # Default Django admin page.
+    # Default Django.
     path('admin/', admin.site.urls),
 
     # Other URLS
 	path('api/', include("Api.urls")),
-    path('login/', views.login),
+    #path('login/', views.login),
+    # Authentication URLS (Login, Logout etc.)
+    #path('', include('django.contrib.auth.urls')),
+    path('', views.loginPage, name = 'login'),
+    path('signup/', views.signupPage, name = 'signup'),
+    path('logout/', views.logoutPage, name = 'logout'),
+
+    # After Authentication URLs
     path('dashboard/', views.dashboard),
-    path('statistics/', views.statistics),
-    path('settings/', views.settings)
+    path('settings/', views.settings),
 ]

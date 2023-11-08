@@ -5,7 +5,7 @@
 
 <head>
 
-  <title>Login</title>
+  <title>Signup</title>
 
   {% load bootstrap5 %}
   {% bootstrap_css %}
@@ -26,22 +26,19 @@
       <div class="card-body py-5 px-md-5">
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8" style="width: 700px;">
-            <h2 class="fw-bold mb-5">Log In</h2>
+            <h2 class="fw-bold mb-5">Sign Up</h2>
 
-            <form id="loginForm" method="post">
+            <form method="post">
               
               {% csrf_token %}
               {{ form.as_p }}
+
+              <p>{{ message }}</p>
 
               <!-- Submit Button -->
               <button type="submit" class="btn btn-primary btn-block mb-4">
                 Submit
               </button>
-
-              <!-- Submit Button -->
-              <a class="btn btn-primary btn-block mb-4" href="/signup">
-                Signup
-              </a>
 
             </form>
 

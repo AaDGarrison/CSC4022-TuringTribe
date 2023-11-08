@@ -23,9 +23,6 @@
         <li class="nav-item active">
           <a class="nav-link active" href="/dashboard">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/statistics">Statistics</a>
-        </li>
       </ul>
     </div>
     <div class="text-end">
@@ -34,7 +31,7 @@
           <a class="nav-link" href="/settings">Settings</a>
         </li>
         <li class="nav-item">
-          <button type="button" class="btn btn-dark" id="logoutButton">Logout</button>
+          <a class="nav-link" href="/logout">Logout</a>
         </li>
       </ul>
     </div>
@@ -61,6 +58,7 @@
     </div>
   </div>
 </body>
+
 <script>
   //var cardIdList=DjangoListToJsList('{{data.CardID|safe}}');
   var cardIdList=JSON.parse("{{data.CardIDJSON|escapejs}}");
