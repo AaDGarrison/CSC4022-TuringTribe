@@ -6,10 +6,12 @@ import plaid
 from plaid.api import plaid_api
 from plaid.model import products
 from plaid.model.transactions_get_request_options import TransactionsGetRequestOptions
+from plaid.model.accounts_get_request_options import AccountsGetRequestOptions
 from plaid.model.link_token_create_request import LinkTokenCreateRequest
 from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUser
 from plaid.model.products import Products
 from plaid.model.country_code import CountryCode
+from Api.models import institution
 from dotenv import load_dotenv
 import time
 import datetime
@@ -26,21 +28,39 @@ configuration = plaid.Configuration(
 api_client = plaid.ApiClient(configuration)
 client = plaid_api.PlaidApi(api_client)
 
-pt_request = plaid_api.SandboxPublicTokenCreateRequest(
-    institution_id="ins_109511",
-    initial_products=[products.Products('transactions')]
-)
+def getAccountinfo(request):
+    """
+    :Returns a plaid list of accounts with the cardId account num
+    :param django request: request from a valid view
+    """
+    CardList = request.session.get('CardData', None)
+    RequestedcardID= request.GET.get('CardId')
+    accountNum=""
+    institution_token=""
+    try:    
+        if CardList==None:
+            raise
+        for item in CardList:
+            if int(RequestedcardID)== item["cardId"]:
+                accountNum=item["accountNum"]
+                test=institution.objects.filter(institutionID=item["instituion"])
+                institution_token=test[0].access_token
+    
+        plaidRequest = plaid_api.AccountsGetRequest(
+            access_token=institution_token,
+            options=AccountsGetRequestOptions(account_ids=[accountNum])
+        )
+    
+        PlaidResponse = client.accounts_get(plaidRequest)
+        return PlaidResponse['accounts']
+    except Exception as e:
+        # Handle the exception
+        raise e
 
-pt_response = client.sandbox_public_token_create(pt_request)
-# The generated public_token can now be
-# exchanged for an access_token
-exchange_request = plaid_api.ItemPublicTokenExchangeRequest(
-    public_token=pt_response['public_token']
-)
-exchange_response = client.item_public_token_exchange(exchange_request)
-private_token=exchange_response['access_token']
+
 
 #Send the client a link to setup Plaid institution
+@login_required
 def sendLinkRequest(request):  
     """
     HTTPS API request which returns a JOSN reposnse to allow a Link request to be estabilished
@@ -70,6 +90,7 @@ def sendLinkRequest(request):
     return JsonResponse(response.to_dict())
     #return JsonResponse({"not Ready":"Needs HTTPS"})
 #receive and setup a new pulic acess token and save to database
+@login_required
 def setupInstitution(request):
     """
     HTTPS API request which returns a JOSN reposnse of the accounts Transaction for a given start and stop date.
@@ -86,24 +107,18 @@ def setupInstitution(request):
     """
     if request.method != 'POST':
         return JsonResponse({'error': 'Invalid request method'}, status=405)
-    public_token = request.POST.get('public_token')
+    link_public_token = request.POST.get('public_token')
     if public_token:
         exchange_request = plaid_api.ItemPublicTokenExchangeRequest(
-            public_token=pt_response['public_token']
+            public_token= link_public_token
             )
         exchange_response = client.item_public_token_exchange(exchange_request)
         private_token=exchange_response['access_token']
-        
-        # You should have a model for storing access tokens.
-        # Replace AccessToken with your actual model.
-        #access_token = AccessToken(public_token=public_token)
-        #access_token.save()
-        print(private_token)
+        new_institution = institution(user=request.user, access_token=private_token)
+        new_institution.save()
         return JsonResponse({'public_token_exchange': 'complete'})
 
-
-    
-
+@login_required
 def getTransactions(request):
     """
     HTTPS API request which returns a JOSN reposnse of the accounts Transaction for a given start and stop date.
@@ -120,37 +135,52 @@ def getTransactions(request):
     """
     if request.method != 'GET':
         return HttpResponseBadRequest("Invalid request method")
+    RequestedcardID= request.GET.get('CardId')
     start= request.GET.get('StartDate')
     end= request.GET.get('StopDate')
+    
+    accountNum=""
+    institution_token=""
+    try:    
+        CardList = request.session.get('CardData', None)
+        if CardList==None:
+            raise
+        for item in CardList:
+            if int(RequestedcardID)== item["cardId"]:
+                accountNum=item["accountNum"]
+                test=institution.objects.filter(institutionID=item["instituion"])
+                institution_token=test[0].access_token
+        plaidRequest = plaid_api.TransactionsGetRequest(
+            access_token=institution_token,
+            #options=TransactionsGetRequestOptions(account_ids=[accountNum]),
+            start_date= datetime.datetime.strptime(start, '%Y-%m-%d').date(),
+            end_date= datetime.datetime.strptime(end, '%Y-%m-%d').date()
+        )
+        response = client.transactions_get(plaidRequest)
+        transactions = response['transactions']
+        transactionList=[]
+        for item in transactions:
+            source="Unkown"
+            if item.merchant_name != None:
+                source=item.merchant_name
         
-    plaidRequest = plaid_api.TransactionsGetRequest(
-        access_token=private_token,
-        #options=TransactionsGetRequestOptions(account_ids=['4WrXeaQZL3iJmxyNBa7xCyqXrQEbDnHJznx3n']),
-        start_date= datetime.datetime.strptime(start, '%Y-%m-%d').date(),
-        end_date= datetime.datetime.strptime(end, '%Y-%m-%d').date()
-    )
-    response = client.transactions_get(plaidRequest)
-    transactions = response['transactions']
-    transactionList=[]
-    for item in transactions:
-        source="Unkown"
-        if item.merchant_name != None:
-            source=item.merchant_name
-        
-        amount=0.0
-        if item.amount>0:
-            amount=-(item.amount)
-        else:
-            amount=abs(item.amount)
+            amount=0.0
+            if item.amount>0:
+                amount=-(item.amount)
+            else:
+                amount=abs(item.amount)
 
-        transactionList.append({
-            "merchant":source,
-            "amount":amount,
-            "date": item.date.strftime("%Y-%m-%d")
-            
-        })
-    return JsonResponse(transactionList,safe=False)
+            transactionList.append({
+                "merchant":source,
+                "amount":amount,
+                "date": item.date.strftime("%Y-%m-%d")    
+            })
+            return JsonResponse(transactionList,safe=False)
+    except Exception as e:
+        # Handle the exception
+        return HttpResponse("An error occured when Querying plaid", content_type='application/json')   
 
+@login_required
 def getBalance(request):
     """
     HTTPS API request which returns a JOSN reposnse of the requested account balance
@@ -165,23 +195,50 @@ def getBalance(request):
     :rtype: JOSN.Response
     :raises: requests.exceptions.RequestException if the request fails.
     """
+    try:
 
-    if(request.method!='GET'):
-        return HttpResponseBadRequest("Invalid request method")
+        if(request.method!='GET'):
+            return HttpResponseBadRequest("Invalid request method")
+        accounts=getAccountinfo(request)
+        AvailableBalance=accounts[int(0)]['balances']["available"]
+        AccountName=accounts[int(0)]['official_name']
+        if AvailableBalance== None:
+            AvailableBalance="Not available"
+        else:
+            AvailableBalance="$"+str(AvailableBalance)
+        return JsonResponse({"AccountName":AccountName,
+                            "Balance":AvailableBalance })
+    except Exception as e:
+        # Handle the exception
+        return HttpResponse("An error occured when Querying plaid", content_type='application/json')
 
-    Account = 0
-    request = plaid_api.AccountsGetRequest(access_token=private_token)
-    response = client.accounts_get(request)
-    accounts = response['accounts']
-    AvailableBalance=accounts[int(Account)]['balances']['available']
-    AccountName=accounts[int(Account)]['official_name']
-    return JsonResponse({"AccountName":AccountName,
-                         "Balance":AvailableBalance })
-
+@login_required
 def getCardName(request):
-    if(request.method!='GET'):
-        return HttpResponseBadRequest("Invalid request method")
-    #add functions to get he account name for all accounts using the database
-    cardID= request.GET.get('CardId')
-    accountName="TestName:"+cardID
-    return JsonResponse({"CardName":accountName})
+    """
+    HTTPS API request which returns a JOSN reposnse of the requested account name
+
+    :param str url: /api/get-card-name/.
+    :param str method: 'GET'.
+    :param dict headers: None.
+    :param dict params: None.
+    :param dict data: CardID
+
+    :return: Json Response with CardName variable
+    :rtype: JOSN.Response
+    :raises: requests.exceptions.RequestException if the request fails.
+    """
+    
+    try:
+        if(request.method!='GET'):
+            return HttpResponseBadRequest("Invalid request method")
+        RequestedcardID= request.GET.get('CardId')
+        accounts=getAccountinfo(request)
+        accountName=accounts[0]["name"]
+        if int(RequestedcardID) >=1000 and int(RequestedcardID)<2000:
+            accountName+=" Transactions"
+        elif int(RequestedcardID) >=2000 and int(RequestedcardID)<3000:
+            accountName+=" Balance"
+        return JsonResponse({"CardName":accountName})
+    except Exception as e:
+        # Handle the exception
+        return HttpResponse("An error occured when Querying plaid", content_type='application/json')

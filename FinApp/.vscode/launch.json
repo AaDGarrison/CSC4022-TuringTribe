@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["runserver"]
+            "args": ["runsslserver","127.0.0.1:9000"]
         }
     ]
 }

@@ -11,19 +11,47 @@ View methods for FinApp.
 # ----------------------------------------------------------------------------
 
 from json import dumps
-from django.contrib.auth.decorators import login_requiredfrom django.shortcuts import render
+from django.shortcuts import render
 from django.views.generic import View
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-
+from Api.models import institution
+import plaid
+from plaid.api import plaid_api
+from dotenv import load_dotenv
+import os
 # ----------------------------------------------------------------------------
 # View Methods/Classes
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
 # Signup
+
+def setUpCards(RequestUser):
+    load_dotenv()
+    configuration = plaid.Configuration(
+    host=plaid.Environment.Sandbox,
+    api_key={
+        'clientId' : os.getenv('client_ID'),
+        'secret': os.getenv('SecretToken'),
+    })
+    api_client = plaid.ApiClient(configuration)
+    client = plaid_api.PlaidApi(api_client)
+    userInstituations= institution.objects.filter(user=RequestUser)
+    cardData=[]
+    cardCount=1
+    for query in userInstituations:
+        plaidRequest = plaid_api.AccountsGetRequest(access_token=query.access_token)
+        response=client.accounts_get(plaidRequest)
+        accounts=response["accounts"]
+        for account in accounts:
+            cardData.append({"cardId":cardCount+1000,"instituion":query.institutionID,"accountNum":account["account_id"]})
+            cardData.append({"cardId":cardCount+2000,"instituion":query.institutionID,"accountNum":account["account_id"]})
+            cardCount+=1
+    return cardData
+
 def signupPage(request):
 
     message = ''
@@ -68,6 +96,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
+            request.session["CardData"]=setUpCards(request.user)
             return redirect('/dashboard')
         else:
             form = AuthenticationForm()
@@ -80,7 +109,7 @@ def loginPage(request):
 
 # ----------------------------------------------------------------------------
 # Logout
-@login_required(login_url='')
+@login_required(login_url='/')
 def logoutPage(request):
 
     logout(request)
@@ -88,18 +117,25 @@ def logoutPage(request):
 
 # ----------------------------------------------------------------------------
 # Dashboard
-@login_required(login_url='')
+@login_required(login_url='/')
 def dashboard(request):
+    print("dashboard")
+    CardList = request.session.get('CardData', None)
+    if CardList==None:
+        CardList=setUpCards(request.user)
+    cardIds=[]
+    for item in CardList:
+        cardIds.append(item["cardId"])
     data = {
-        "TotalCards":range(5), #dashboardCardCount.objects.get(user=request.user),
-        "CardIDJSON": dumps([1222,2333,1444,1555,2666]),
-        "CardID": [1222,2333,1444,1555,2666]
+        "TotalCards":range(len(cardIds)), #dashboardCardCount.objects.get(user=request.user),
+        "CardIDJSON": dumps(cardIds),
+        "CardID": cardIds
     }
 
     return render(request, 'dashboard.html', {"data": data})
 
 # ----------------------------------------------------------------------------
 # Settings
-@login_required(login_url='')
+@login_required(login_url='/')
 def settings(request):
     return render(request, 'settings.html')

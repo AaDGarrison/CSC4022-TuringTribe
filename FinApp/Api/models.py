@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 #     cardId=models.IntegerField()
 #     AccountNum=models.CharField(max_length=100)
     
-class institution():
+class institution(models.Model):
     institutionID= models.AutoField(primary_key=True)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     access_token=models.CharField(max_length=255)

@@ -11,7 +11,8 @@ function updateSingleItem(id,text)
 }s
 function getBalance(id)
 {
-    return fetch('/api/get-balance/')
+    var query="?CardId="+id
+    return fetch('/api/get-balance/'+query)
     .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -20,7 +21,7 @@ function getBalance(id)
         return response.json();
       })
     .then(data=>{
-        updateSingleItem(id,"$"+data.Balance)
+        updateSingleItem(id, data.Balance)
     })
 
 }
