@@ -8,7 +8,7 @@ function updateSingleItem(id,text)
         // Handle the error
         console.error(error);
     }
-}s
+}
 function getBalance(id)
 {
     var query="?CardId="+id

@@ -36,7 +36,7 @@ function GetTransaction(id) {
     })
     .then(data=>{
       var stringList=[]
-      if (data.length()<=0)
+      if (data.length<=0)
         stringList.push("Zero Transactions Found");
       for(var item of data)
       {
