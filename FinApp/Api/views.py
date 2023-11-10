@@ -76,19 +76,21 @@ def sendLinkRequest(request):
     :raises: requests.exceptions.RequestException if the request fails.
     """
     # go to https://dashboard.plaid.com/developers/api and add a redirect URL needs HTTPS
-    request = LinkTokenCreateRequest(
-            products=[Products("auth")],
-            client_name="Plaid Test App",
-            country_codes=[CountryCode('US')],
-            redirect_uri='https://localhost:3000/dashboard',
-            language='en',
-            user=LinkTokenCreateRequestUser(
-                client_user_id=str(time.time())
+    try:    
+        request = LinkTokenCreateRequest(
+                products=[Products("auth")],
+                client_name="Plaid Test App",
+                country_codes=[CountryCode('US')],
+                redirect_uri='https://localhost:3000/dashboard',
+                language='en',
+                user=LinkTokenCreateRequestUser(
+                    client_user_id=str(time.time())
+                )
             )
-        )
-    response = client.link_token_create(request)
-    return JsonResponse(response.to_dict())
-    #return JsonResponse({"not Ready":"Needs HTTPS"})
+        response = client.link_token_create(request)
+        return JsonResponse(response.to_dict())
+    except:
+         return JsonResponse({'Error': 'Failed'})
 #receive and setup a new pulic acess token and save to database
 @login_required
 def setupInstitution(request):
@@ -105,18 +107,22 @@ def setupInstitution(request):
     :rtype: JOSN.Response that verifies the successful creation of an new instituation.
     :raises: requests.exceptions.RequestException if the request fails.
     """
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
-    link_public_token = request.POST.get('public_token')
-    if public_token:
-        exchange_request = plaid_api.ItemPublicTokenExchangeRequest(
-            public_token= link_public_token
-            )
-        exchange_response = client.item_public_token_exchange(exchange_request)
-        private_token=exchange_response['access_token']
-        new_institution = institution(user=request.user, access_token=private_token)
-        new_institution.save()
-        return JsonResponse({'public_token_exchange': 'complete'})
+    try:
+        if request.method != 'POST':
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+        link_public_token = request.POST.get('public_token')
+        if link_public_token:
+            exchange_request = plaid_api.ItemPublicTokenExchangeRequest(
+                public_token= link_public_token
+                )
+            exchange_response = client.item_public_token_exchange(exchange_request)
+            private_token=exchange_response['access_token']
+            new_institution = institution(user=request.user, access_token=private_token)
+            new_institution.save()
+            return JsonResponse({'Setup': 'complete'})
+
+    except:
+         return JsonResponse({'Error': 'Failed'})
 
 @login_required
 def getTransactions(request):
@@ -152,33 +158,34 @@ def getTransactions(request):
                 institution_token=test[0].access_token
         plaidRequest = plaid_api.TransactionsGetRequest(
             access_token=institution_token,
-            #options=TransactionsGetRequestOptions(account_ids=[accountNum]),
+            options=TransactionsGetRequestOptions(account_ids=[accountNum]),
             start_date= datetime.datetime.strptime(start, '%Y-%m-%d').date(),
             end_date= datetime.datetime.strptime(end, '%Y-%m-%d').date()
         )
         response = client.transactions_get(plaidRequest)
         transactions = response['transactions']
         transactionList=[]
-        for item in transactions:
+        print(len(transactions))
+        for transaction in transactions:
             source="Unkown"
-            if item.merchant_name != None:
-                source=item.merchant_name
+            if transaction.merchant_name != None:
+                source=transaction.merchant_name
         
             amount=0.0
-            if item.amount>0:
-                amount=-(item.amount)
+            if transaction.amount>0:
+                amount=-(transaction.amount)
             else:
-                amount=abs(item.amount)
+                amount=abs(transaction.amount)
 
             transactionList.append({
                 "merchant":source,
                 "amount":amount,
-                "date": item.date.strftime("%Y-%m-%d")    
+                "date": transaction.date.strftime("%Y-%m-%d")    
             })
-            return JsonResponse(transactionList,safe=False)
+        return JsonResponse(transactionList,safe=False)
     except Exception as e:
         # Handle the exception
-        return HttpResponse("An error occured when Querying plaid", content_type='application/json')   
+        return JsonResponse({'Error': 'Failed'})   
 
 @login_required
 def getBalance(request):
@@ -210,7 +217,7 @@ def getBalance(request):
                             "Balance":AvailableBalance })
     except Exception as e:
         # Handle the exception
-        return HttpResponse("An error occured when Querying plaid", content_type='application/json')
+        return JsonResponse({'Error': 'Failed'})
 
 @login_required
 def getCardName(request):
@@ -241,4 +248,4 @@ def getCardName(request):
         return JsonResponse({"CardName":accountName})
     except Exception as e:
         # Handle the exception
-        return HttpResponse("An error occured when Querying plaid", content_type='application/json')
+        return JsonResponse({'Error': 'Failed'})

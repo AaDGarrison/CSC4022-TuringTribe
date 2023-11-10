@@ -20,14 +20,37 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from Api.models import institution
 import plaid
 from plaid.api import plaid_api
+from plaid.model.transactions_get_request_options import TransactionsGetRequestOptions
 from dotenv import load_dotenv
 import os
+import datetime
 # ----------------------------------------------------------------------------
 # View Methods/Classes
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
 # Signup
+def verifyTransaction(client, institution_token, accountNum):
+    plaidRequest = plaid_api.TransactionsGetRequest(
+            access_token=institution_token,
+            options=TransactionsGetRequestOptions(account_ids=[accountNum]),
+            start_date= datetime.datetime.strptime('2020-03-25', '%Y-%m-%d').date(),
+            end_date= datetime.datetime.strptime('2023-12-25', '%Y-%m-%d').date()
+        )
+    response = client.transactions_get(plaidRequest)
+    transactions = response['transactions']
+    if len(transactions)>0:
+        return True
+    else:
+        return False
+
+def verifyBalance(account):
+    if account == None:
+        return False
+    AvailableBalance=account['balances']["available"]
+    if AvailableBalance==None:
+        return False
+    return True
 
 def setUpCards(RequestUser):
     load_dotenv()
@@ -47,8 +70,10 @@ def setUpCards(RequestUser):
         response=client.accounts_get(plaidRequest)
         accounts=response["accounts"]
         for account in accounts:
-            cardData.append({"cardId":cardCount+1000,"instituion":query.institutionID,"accountNum":account["account_id"]})
-            cardData.append({"cardId":cardCount+2000,"instituion":query.institutionID,"accountNum":account["account_id"]})
+            if verifyTransaction(client,query.access_token,account["account_id"]):
+                cardData.append({"cardId":cardCount+1000,"instituion":query.institutionID,"accountNum":account["account_id"]})
+            if verifyBalance(account):
+                cardData.append({"cardId":cardCount+2000,"instituion":query.institutionID,"accountNum":account["account_id"]})
             cardCount+=1
     return cardData
 
@@ -96,7 +121,6 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            request.session["CardData"]=setUpCards(request.user)
             return redirect('/dashboard')
         else:
             form = AuthenticationForm()
@@ -122,7 +146,8 @@ def dashboard(request):
     print("dashboard")
     CardList = request.session.get('CardData', None)
     if CardList==None:
-        CardList=setUpCards(request.user)
+        request.session["CardData"]=setUpCards(request.user)
+        CardList = request.session.get('CardData', None)
     cardIds=[]
     for item in CardList:
         cardIds.append(item["cardId"])

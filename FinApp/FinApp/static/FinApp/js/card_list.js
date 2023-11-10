@@ -36,9 +36,11 @@ function GetTransaction(id) {
     })
     .then(data=>{
       var stringList=[]
+      if (data.length()<=0)
+        stringList.push("Zero Transactions Found");
       for(var item of data)
       {
-        stringList.push("Source:"+item.merchant+" Amount :"+item.amount +" Date: "+item.date)
+        stringList.push("Source: "+item.merchant+" Amount :"+item.amount +" Date: "+item.date)
 
       }
       updateList(stringList,id);
