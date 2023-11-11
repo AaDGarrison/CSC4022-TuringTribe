@@ -10,6 +10,7 @@ from plaid.model.transactions_get_request_options import TransactionsGetRequestO
 from plaid.model.accounts_get_request_options import AccountsGetRequestOptions
 from plaid.model.link_token_create_request import LinkTokenCreateRequest
 from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUser
+from plaid.model.institutions_get_by_id_request import InstitutionsGetByIdRequest
 from plaid.model.products import Products
 from plaid.model.country_code import CountryCode
 from Api.models import institution
@@ -137,15 +138,32 @@ def setupInstitution(request):
             exchange_response = client.item_public_token_exchange(exchange_request)
             private_token=exchange_response['access_token']
 
+            #PROCESS - institution name
+            accountRequest = plaid_api.AccountsGetRequest(access_token=private_token)
+            response=client.accounts_get(accountRequest)
+            institutionId=response["item"]['institution_id']
+            returnName=""
+            plaidRequest = InstitutionsGetByIdRequest(
+                institution_id=institutionId,
+                country_codes=[CountryCode("US")]
+            )
+            instResponse = client.institutions_get_by_id(plaidRequest)
+            institutionName=instResponse["institution"]["name"]
+            if institutionName != None: 
+                returnName=institutionName
+            else:
+                returnName="Unkown Institution Name"
             #PROCESS - SAVE THE NEW INSTITUTION TO DATABASE
             new_institution = institution(user=request.user, access_token=private_token)
             new_institution.save()
 
             #OUTPUT - RETURN SUCCESS JSON RESPONSE
-            return JsonResponse({'Setup': 'complete'})
+            return JsonResponse({'Satus': 'Success',
+                                 'Name': returnName
+                                 })
 
     except:
-         return JsonResponse({'Error': 'Failed'})
+         return JsonResponse({'Status': 'Failed'})
 
 #FUNCTION DEFINITION - RETRIEVE TRANSACTIONS BASED ON ACCOUNT/DATE RANGE.
 @login_required

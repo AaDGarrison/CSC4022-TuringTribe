@@ -9,6 +9,12 @@
   line-height: 1; /* Adjust line-height as needed */
   }
 
+  .card-body-list {
+    height: auto; /* Set a fixed height for the card body */
+    overflow-y: auto; /* Add vertical scrollbar when content overflows */
+    max-height: 100px;
+    width: auto;
+}
 </style>
 
 
@@ -58,9 +64,13 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Configured Instituations</h5>
-          {% for i in data.institutionName %}
-          <p class="card-text">{{i}}</p>
-          {% endfor %}
+          <div class="card-body-list">
+            <ul style="list-style-type: none;" id="Instituations">
+               {% for i in data.institutionName %}
+                <li>{{i}}</li>
+               {% endfor %}
+            </ul>
+        </div>
           <a  id="link-button" class="btn btn-primary">Link Account</a>
         </div>
       </div>
@@ -93,7 +103,17 @@
           });
           $.post('/api/setup-institution/', {
             public_token: public_token,
-          });
+          }).done(function(data) {
+            if (data.Satus="Success")
+            {
+              updateList(data.Name, "Instituations")
+
+            }
+            else
+            {
+              alert('Failed to add Institution');
+            }
+            });
         },
         onExit: function(err, metadata) {
           if (err != null) {
@@ -108,8 +128,25 @@
     })(jQuery);
 
     function removeinstitution(parameter) {
-            // Your JavaScript logic using the parameter
+            //not used currently
             console.log(parameter)
         }
+    
+    function updateList(data, id) 
+    {
+      // Get the list element by its ID
+      const list = document.getElementById(id);
+      if (list) 
+      {
+      // Add list items based on 'data'
+        const listItem = document.createElement("li");
+        listItem.textContent = data; // Use the item directly
+        list.appendChild(listItem);
+      } 
+      else 
+      {
+      console.error(`Element with ID '${id}' not found.`);
+      }
+    }  
   </script>
 </html>
